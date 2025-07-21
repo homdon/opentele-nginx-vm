@@ -1,0 +1,65 @@
+# Docker Compose File Comparison Summary
+
+This `README.md` summarizes the key differences found between the `docker-compose.yml` files in the `ultimate-devops-project-demo` and `ultimate-devops-project-nginx` directories.
+
+## Comparison Command
+
+The comparison was performed using the following command:
+
+```bash
+diff -r ultimate-devops-project-demo ultimate-devops-project-nginx > diff.txt
+```
+
+## Summary of Differences
+
+The primary differences are found in the `docker-compose.yml` files, specifically concerning the `frontend` and `frontend-proxy` services. The `ultimate-devops-project-demo` version uses environment variables for port and address configurations, offering more flexibility, while the `ultimate-devops-project-nginx` version hardcodes these values.
+
+### `frontend` Service Changes
+
+The `frontend` service in `ultimate-devops-project-demo` exposes the port using a variable `${FRONTEND_PORT}` and sets environment variables dynamically. In contrast, `ultimate-devops-project-nginx` hardcodes the port to `3000` and sets `FRONTEND_ADDR` directly.
+
+```diff
+--- a/src/frontend/docker-compose.yml
++++ b/src/frontend/docker-compose.yml
+@@ -268,11 +268,9 @@
+     image: ghcr.io/iam-veeramalla/ultimate-devops-project-demo-frontend:v1.0.1
+     build:
+       context: ./src/frontend
+-    ports:
+-      - "${FRONTEND_PORT}"
+     environment:
+-      - PORT=${FRONTEND_PORT}
+-      - FRONTEND_ADDR
++      - PORT=3000
++      - FRONTEND_ADDR=frontend:3000
+     depends_on:
+       - frontend-proxy
+     networks:
+```
+
+### `frontend-proxy` Service Changes
+
+Similarly, the `frontend-proxy` service shows a shift from variable-based port mapping and environment variables to hardcoded values.
+
+```diff
+--- a/src/frontend-proxy/docker-compose.yml
++++ b/src/frontend-proxy/docker-compose.yml
+@@ -328,11 +326,12 @@
+     image: ghcr.io/iam-veeramalla/ultimate-devops-project-demo-frontend-proxy:v1.0.1
+     build:
+       context: ./src/frontend-proxy
+     ports:
+-      - "${ENVOY_PORT}:${ENVOY_PORT}"
+-      - 10000:10000
++      - "8080:8080"
++      - "10000:10000"
+     environment:
+-      - FRONTEND_PORT
+-      - FRONTEND_HOST
++      - FRONTEND_PORT=3000
++      - FRONTEND_HOST=frontend
++      - ENVOY_PORT=8080
+     networks:
+       - microservices
+     depends_on:
+```
