@@ -43,6 +43,17 @@ git push -u origin main
 ```
 # *   **Important Note for Password Prompt:** When Git asks for your password during the push, **do NOT** enter your GitHub account password. Instead, use a **Personal Access Token (PAT)** generated from your GitHub account. You can generate one here: `https://github.com/settings/tokens`. Use this PAT as your password when prompted.
 
+#another way is to SSHkey gen
+-Generate SSH key:
+ssh-keygen -t ed25519 -C "your_email@example.com"
+enter
+enter
+enter
+cat ~/.ssh/id_ed25519.pub
+git remote set-url origin git@github.com:yourusername/your-repo.git
+
+
+
 # 7.  **Verify your files on GitHub:**
 # Go to your repository URL in a browser and confirm your files are there.
 
