@@ -1,0 +1,33 @@
+  ---
+
+  Git Pull & Push: Quick Guide
+
+  Phase 1: Initial Setup (One-Time)
+
+   1. Initialize Repo (if new):
+      git init
+   2. Configure User Info:
+      git config --global user.email "your_email@example.com"
+      git config --global user.name "Your Name"
+   3. Link to Remote:
+      git remote add origin <repository_url>
+
+  Phase 2: Daily Workflow (Recurring)
+
+   1. Check Status:
+      git status (See what's changed)
+   2. Add Changes:
+      git add . (Stage all changes)
+      Or: git add <file_name> (Stage specific file)
+   3. Commit Changes:
+      git commit -m "Your descriptive commit message"
+   4. Get Latest Remote Changes (before pushing):
+      git pull --rebase origin main (Fetches and reapplies your commits on top of
+  remote)
+      Resolve any conflicts if they occur during rebase.
+   5. Push Your Changes:
+      git push -u origin main (First push for a new branch)
+      Or: git push (Subsequent pushes)
+   6. Verify Push:
+      git status (Confirm local branch is up-to-date with remote)
+
