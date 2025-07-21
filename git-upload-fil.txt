@@ -45,12 +45,13 @@ git push -u origin main
 
 #another way is to SSHkey gen
 -Generate SSH key:
-ssh-keygen -t ed25519 -C "your_email@example.com"
+ssh-keygen -t ed25519 -C "homdon@github.com"
 enter
 enter
 enter
 cat ~/.ssh/id_ed25519.pub
-git remote set-url origin git@github.com:yourusername/your-repo.git
+git remote set-url origin git@github.com:homdon/opentele-nginx-vm.git
+
 
 
 
