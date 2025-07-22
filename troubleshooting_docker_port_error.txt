@@ -1,0 +1,43 @@
+Problem Summary:
+The 'frontend-proxy' Docker container failed to start because port 8080 was already in use by another Docker container.
+
+Troubleshooting Steps and Commands:
+
+1.  **Identify process using port 8080:**
+    `lsof -i :8080`
+    Lists processes using the port.
+    Example Output:
+    ```
+    COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+    docker-pr 5143 root    7u  IPv4  37277      0t0  TCP *:http-alt (LISTEN)
+    docker-pr 5149 root    7u  IPv6  37278      0t0  TCP *:http-alt (LISTEN)
+    ```
+
+2.  **List running Docker containers:**
+    Command: docker ps --format '{{.ID}}	{{.Names}}	{{.Ports}}'
+    Shows running containers and their ports.
+    Example Output (relevant part):
+    ```
+    2eb3bdb20022	inspiring_tu	0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+    ```
+
+3.  **Stop container using allocated port:**
+    `docker stop <container_id>`
+    Stops the identified container.
+    Example: `docker stop 2eb3bdb20022`
+    Example Output:
+    ```
+    2eb3bdb20022
+    ```
+
+4.  **Start Docker services:**
+    `docker compose -f docker-compose.yml up -d`
+    Starts services from docker-compose.yml.
+
+5.  **Verify 'frontend-proxy' status:**
+    `docker ps --filter "name=frontend-proxy" --format '{{.ID}}	{{.Names}}	{{.Ports}}'`
+    Confirms 'frontend-proxy' is running and its ports.
+    Example Output:
+    ```
+    40988bcdf068	frontend-proxy	0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 0.0.0.0:10000->10000/tcp, [::]:10000->10000/tcp
+    ```
