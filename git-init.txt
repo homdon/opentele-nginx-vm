@@ -9,6 +9,9 @@
    2. Configure User Info:
       git config --global user.email "your_email@example.com"
       git config --global user.name "Your Name"
+        - for the password/token
+          * goto settins > devloper settings > personal access to ken > token classic > generate (tick the repo option) nad geratate = This will be you pass for repo push origin 
+
    3. Link to Remote:
       git remote add origin <repository_url>
 
